@@ -1,4 +1,7 @@
 from tkinter import *
+import tkinter as tk
+from tkinter import ttk
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -22,7 +25,6 @@ def printer(printarr):
         #print(p.text)
 
 
-
 mainwin = Tk()
 mainwin.title("Nobetçi Eczane")
 mainwin.geometry("1000x1000")
@@ -31,9 +33,25 @@ L1 = Label(mainwin, text="İl Seçiniz:")
 L1.pack(side=LEFT)
 L1.place(x = 5,y = 5, width = 150, height = 50)
 
-E1 = Entry(mainwin, bd=5)
-E1.pack(side=RIGHT)
-E1.place(x = 200,y = 12, width = 100, height = 25)
+def ilgetir():
+    with open('C:/Users/Pc/Documents/deneme/NobetciEczane/il.json') as f:
+        veri = json.load(f)
+        yeniveri=json.dumps(veri)
+        for sehir in yeniveri:
+            print(sehir)
+            
+
+
+n = StringVar()
+cb =ttk.Combobox(mainwin, textvariable=n)
+cb['values']=[ilgetir]
+cb.bind('<FocusIn>', lambda event: ilgetir)
+cb.pack()
+cb.place(x = 200,y = 12, width = 100, height = 25)
+
+#E1 = Entry(mainwin, bd=5)
+#E1.pack(side=RIGHT)
+#E1.place(x = 200,y = 12, width = 100, height = 25)
 
 L2 = Label(mainwin, text="İlçe Seçiniz:")
 L2.pack(side=LEFT)
@@ -44,7 +62,7 @@ E2.pack(side=RIGHT)
 E2.place(x = 200,y = 48, width = 100, height = 25)
 
 def eczanelerigetir():
-    il = E1.get()
+    il = ils.get()
     ilce = E2.get()
     url = url_istek_at("https://{}.eczaneleri.org/{}/nobetci-eczaneler.html".format(il, ilce))
     parse = html_parse(url)
