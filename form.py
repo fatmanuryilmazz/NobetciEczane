@@ -1,6 +1,5 @@
 from tkinter import Label, Tk, ttk
 from bs4 import BeautifulSoup
-from datetime import datetime
 from tkinter import *
 from tkinter.ttk import *
 
@@ -62,16 +61,19 @@ def html_parse(htmlKaynak):
 
 
 def get_element(source, elem, type, find):
-    return source.find_all(elem, attrs={type: find})
+    src= source.find("div", attrs={"class": "pane-wrapper"})
+    list= src.find("ul", attrs={"class": "media-list"})
+    return list.find_all(elem, attrs={type: find})
 
 
 def printer(printarr):
+    listbox.delete(0, 'end')
     for p in printarr:
-        adres=p.div.text
+        adres=p.text
         listbox.insert(0,adres.rstrip())
-
-       # date = get_element(p, "span", "class", "date")
-        #print(date)
+        # print(adres)
+        # date = get_element(p, "span", "class", "date")
+        # print(date)
 
 
 class App(ttk.Frame):
