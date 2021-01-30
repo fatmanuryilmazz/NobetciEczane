@@ -70,12 +70,12 @@ def karakter_cevir(metin):
 
 print("\n\n İller Listeleniyor\n")
 il_getir()
-il = input("\nİl Girin: ").strip().capitalize()
+il = input("\nİl Girin: ").replace(" ","").capitalize()
 
 print("\n\n {} İlçeleri Listeleniyor\n".format(il))
 ilce_getir(il)
 
-ilce = input("\nİlçe Girin: ").strip().capitalize()
+ilce = input("\nİlçe Girin: ").replace(" ","").capitalize()
 
 print("\n\n {} ili {} İlçesi Nöbetçi Eczaneler Listeleniyor".format(il, ilce))
 url = url_istek_at("https://{}.eczaneleri.org/{}/nobetci-eczaneler.html".format(karakter_cevir(il), karakter_cevir(ilce)))
