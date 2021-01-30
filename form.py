@@ -1,5 +1,9 @@
 from tkinter import Label, Tk, ttk
 from bs4 import BeautifulSoup
+from datetime import datetime
+from tkinter import *
+from tkinter.ttk import *
+
 import requests
 import json
 
@@ -62,16 +66,12 @@ def get_element(source, elem, type, find):
 
 
 def printer(printarr):
-    # TODO: date her ilde yok var yok kontrolü yapılacak
-    # TODO: Adres Eklenecek
     for p in printarr:
-        name = p.h4.text
-        print(name.rstrip())
+        adres=p.div.text
+        listbox.insert(0,adres.rstrip())
 
-        # date = get_element(p, "span", "class", "date")
-        # print(date[0].text)
-
-        # print(name.rstrip() + "\t" + date[0].text)
+       # date = get_element(p, "span", "class", "date")
+        #print(date)
 
 
 class App(ttk.Frame):
@@ -110,13 +110,16 @@ class App(ttk.Frame):
         url = url_istek_at("https://{}.eczaneleri.org/{}/nobetci-eczaneler.html".format(karakter_cevir(il), karakter_cevir(ilce)))
         # print(url)
         parse = html_parse(url)
-        elem = get_element(parse, "div", "class", "media-body")
+        elem = get_element(parse, "li", "class", "media")
         printer(elem)
-
 
 app = Tk()
 app.title("Nöbetçi Eczane")
-app.geometry("250x500")
+app.geometry("900x500")
+
+listbox = Listbox(app)
+listbox.place(x=75, y=150, width=800, height=400)
+
 app = App(app)
 app.grid(column=0, row=0, sticky="WESN")
 app.mainloop()
